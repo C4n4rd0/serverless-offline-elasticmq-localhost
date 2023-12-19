@@ -11,14 +11,14 @@ This repository allows to self define the version of elasticmq without requiring
 To install with npm, run this in your service directory:
 
 ```bash
-npm install --save-dev serverless-offline-elasticmq
+npm install --save-dev serverless-offline-elasticmq-localhost
 ```
 
 Then add this to your `serverless.yml`
 
 ```yml
 plugins:
-  - serverless-offline-elasticmq
+  - serverless-offline-elasticmq-localhost
 ```
 
 > Important:
