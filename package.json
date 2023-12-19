@@ -1,6 +1,6 @@
 {
   "name": "@c4n4rd0/serverless-offline-elasticmq",
-  "version": "0.0.12",
+  "version": "1.3.0",
   "description": "Serverless Framework Plugin to download and run ElasticMQ",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
