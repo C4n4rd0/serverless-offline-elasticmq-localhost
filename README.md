@@ -1,4 +1,4 @@
-# serverless-offline-elasticmq
+# serverless-offline-elasticmq-localhost
 
 Serverless Framework Plugin to download and run an elasticMQ server to use with AWS SQS plugins
 
