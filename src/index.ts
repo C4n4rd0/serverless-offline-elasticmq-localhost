@@ -9,7 +9,6 @@ import { chunksToLinesAsync } from "@rauschma/stringio";
 import * as https from "https";
 
 const MQ_LOCAL_PATH = join(__dirname, "../bin");
-const MQ_FILE_VERSION_PATH = `${MQ_LOCAL_PATH}/version`;
 
 class ServerlessOfflineElasticMqPlugin {
   public readonly commands: Record<string, ServerlessPluginCommand>;
@@ -57,7 +56,7 @@ class ServerlessOfflineElasticMqPlugin {
             this.serverless.cli.log(
               `ElasticMq version ${elasticMqVersion} downloaded as ${elasticMqServerJarName}`,
             );
-            fs.writeFile(MQ_FILE_VERSION_PATH, elasticMqVersion);
+
             resolve();
           });
         })
@@ -174,7 +173,11 @@ aws {
     for await (const line of chunksToLinesAsync(readable)) {
       startupLog.push(line);
       this.serverless.cli.log(line);
-      if (line.includes("ElasticMQ server (0.15.7) started")) {
+      if (
+        line.includes(
+          `ElasticMQ server (${this.elasticMqConfig.version}) started`,
+        )
+      ) {
         return (started = true);
       }
     }
