@@ -28,6 +28,10 @@ class ServerlessOfflineElasticMqPlugin {
     };
   }
 
+  private getJarFileName = (elasticMqVersion: string) => {
+    return `elasticmq-server-${elasticMqVersion}.jar`;
+  };
+
   private downloadElasticMqIfNecessary = async () => {
     const elasticMqVersion = this.elasticMqConfig.version;
 
@@ -35,7 +39,7 @@ class ServerlessOfflineElasticMqPlugin {
       throw new Error("The property custom.elasticmq.version is mandatory.");
     }
 
-    const elasticMqServerJarName = `elasticmq-server-${elasticMqVersion}.jar`;
+    const elasticMqServerJarName = this.getJarFileName(elasticMqVersion);
 
     if (this.isJarFilePresent(elasticMqServerJarName)) {
       return;
@@ -120,11 +124,10 @@ aws {
 `;
     await fs.writeFile(`${MQ_LOCAL_PATH}/custom.conf`, confFile);
 
-    args.push(
-      "-jar",
-      "-Dconfig.file=custom.conf",
-      "elasticmq-server-0.15.7.jar",
-    );
+    const elasticMqVersion = this.elasticMqConfig.version;
+    const elasticMqServerJarName = this.getJarFileName(elasticMqVersion);
+
+    args.push("-jar", "-Dconfig.file=custom.conf", elasticMqServerJarName);
 
     const proc = spawn("java", args, {
       cwd: MQ_LOCAL_PATH,
